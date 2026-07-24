@@ -1,6 +1,11 @@
 using BlazorApp.Components;
+using Microsoft.AspNetCore.DataProtection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo("/var/dpkeys"))
+    .SetApplicationName("blazor-server-teste");
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -16,7 +21,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAntiforgery();
 
